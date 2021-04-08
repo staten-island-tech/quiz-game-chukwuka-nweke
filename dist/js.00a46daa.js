@@ -118,7 +118,44 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"js/index.js":[function(require,module,exports) {
-console.log("connected");
+function buildQuiz() {
+  var output = [];
+  myQuestions.forEach(function (currentQuestion, questionNumber) {
+    var answers = [];
+
+    for (letter in currentQuestion.answers) {
+      answers.push("<label>\n                        <input type=\"radio\" name=\"question".concat(questionNumber, "\" value=\"").concat(letter, "\">\n                            ").concat(letter, " :\n                            ").concat(currentQuestion.answers[letter], "\n                    </label>"));
+    }
+
+    output.push("<div class=\"question\"> ".concat(currentQuestion.question, " </div>\n                <div class=\"answers\"> ").concat(answers.join(''), " </div>"));
+  });
+  quizContainer.innerHTML = output.join('');
+}
+
+function showResults() {}
+
+var quizContainer = document.getElementById('quiz');
+var resultsContainer = document.getElementById('results');
+var submitButton = document.getElementById('submit');
+var myQuestions = [{
+  question: "How many players on one team are on the field at a time?",
+  answers: {
+    a: "13",
+    b: "11",
+    c: "22"
+  },
+  correctAnswer: "b"
+}, {
+  question: "What is the name of the position whose main purpose is to run the ball from the backfield?",
+  answers: {
+    a: "runningback",
+    b: "quarterback",
+    c: "wide reiver"
+  },
+  correctAnswer: "a"
+}];
+buildQuiz();
+submitButtton.addEventListener('click', showResults);
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -147,7 +184,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57171" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52379" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
